@@ -4,7 +4,7 @@ MySQL
 
 
 
-### 创建数据库，并授权
+## 创建数据库，并授权
 
 ``` sql
 create database xx default character set utf8mb4 collate utf8mb4_unicode_ci;
@@ -13,7 +13,7 @@ grant all on xx.* to 'xx'@'%' identified by 'xx@123';
 ```
 
 
-### MySQL主从配置，基于GTID
+## MySQL主从配置，基于GTID
 
 配置步骤：
 
