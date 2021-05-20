@@ -1,10 +1,14 @@
-### mysql common guide
+# mysql common guide
 
-MySQL
+采用MySQL5.7的版本
+编码采用utf8编码
+大小写不敏感
+一个数据库一个用户
 
 
 
-## 创建数据库，并授权
+
+## 创建数据库/用户，并授权
 
 ``` sql
 create database xx default character set utf8mb4 collate utf8mb4_unicode_ci;
@@ -12,79 +16,29 @@ grant all on xx.* to 'xx'@'%' identified by 'xx@123';
 
 ```
 
+## SQL脚本文件规范
 
-## MySQL主从配置，基于GTID
+SQL脚本文件规范，
 
-配置步骤：
-
-- 修改root密码
-- 授权root登录
-- 创建slave用户
-- 配置主从同步
-
-``` sql
-
-ALTER USER 'root'@'localhost' IDENTIFIED BY '4Rfv@1118#'; 
-
-grant all on *.* to 'root'@'%' IDENTIFIED BY '4Rfv@1118#';
-
-grant replication slave on *.* to 'repl'@'%' identified by '4Rfv@1118#';
-
-CHANGE MASTER TO MASTER_HOST='10.10.0.163',MASTER_USER='repl',MASTER_PASSWORD='4Rfv@1118#',MASTER_AUTO_POSITION=1;
-
-```
+- SQL脚本文件名称：<数据库名称>-<时间>-[编号].sql，比如：xx-20210520-1.sql
+- SQL脚本使用UTF-8编码，不要使用gbk等其它编码格式
+- SQL脚本使用SQL格式化（选用）
 
 
-## 主配置
+## 执行DDL语句规范
 
-``` 
-[mysqld]
-datadir=/data/mysql/data
-socket=/var/lib/mysql/mysql.sock
-character-set-server=utf8
+DDL脚本语句规范：
 
-skip_ssl
-server-id=163
-gtid_mode=on
-enforce_gtid_consistency=on
-log_bin=master-binlog
-log-slave-updates=1    
-binlog_format=row 
-skip_slave_start=1 
+    CREATE语句不需要特别说明
+    有DROP，TRUNCATE等语句需要特别说明原因
 
-# Disabling symbolic-links is recommended to prevent assorted security risks
-symbolic-links=0
 
-log-error=/var/log/mysqld.log
-pid-file=/var/run/mysqld/mysqld.pid
+## 执行DML语句
 
-```
+执行DML语句规范：
 
-## 从配置
+    DELETE语句需要特殊说明
 
-```
-[mysqld]
-datadir=/data/mysql/data
-socket=/var/lib/mysql/mysql.sock
-gtid_mode=on
-enforce_gtid_consistency=on
-server_id=88
-read_only = ON
-skip_ssl
 
-#binlog
-log-bin=slave-binlog
-log-slave-updates=1
-binlog_format=row
-#
-##relay log
-skip_slave_start=1
 
-# Disabling symbolic-links is recommended to prevent assorted security risks
-symbolic-links=0
-
-log-error=/var/log/mysqld.log
-pid-file=/var/run/mysqld/mysqld.pid
-
-```
 
