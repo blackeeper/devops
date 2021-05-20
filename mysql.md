@@ -1,4 +1,4 @@
-## mysql common guide
+### mysql common guide
 
 MySQL
 
@@ -6,7 +6,7 @@ MySQL
 
 ### 创建数据库，并授权
 
-```
+``` sql
 create database xx default character set utf8mb4 collate utf8mb4_unicode_ci;
 grant all on xx.* to 'xx'@'%' identified by 'xx@123';
 
@@ -22,7 +22,7 @@ grant all on xx.* to 'xx'@'%' identified by 'xx@123';
 - 创建slave用户
 - 配置主从同步
 
-```
+``` sql
 
 ALTER USER 'root'@'localhost' IDENTIFIED BY '4Rfv@1118#'; 
 
@@ -37,7 +37,7 @@ CHANGE MASTER TO MASTER_HOST='10.10.0.163',MASTER_USER='repl',MASTER_PASSWORD='4
 
 ## 主配置
 
-```
+``` 
 [mysqld]
 datadir=/data/mysql/data
 socket=/var/lib/mysql/mysql.sock
