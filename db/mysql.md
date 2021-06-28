@@ -1,4 +1,4 @@
-# mysql common guide
+# 数据库通用规范指导
 
 采用MySQL5.7的版本
 编码采用utf8编码
@@ -11,12 +11,18 @@
 
 
 
-## 创建数据库/用户，并授权
+## MySQL创建数据库/用户，并授权
 
 ``` sql
 create database xx default character set utf8mb4 collate utf8mb4_unicode_ci;
 grant all on xx.* to 'xx'@'%' identified by 'xx@123';
+```
 
+## Oracle创建数据库/用户，并授权
+
+``` sql
+create user 用户名 identified by "密码";
+grant dba to 用户名;
 ```
 
 ## SQL脚本文件规范
